@@ -1,12 +1,14 @@
 import { Resolver, Query, Parent, Context, Info, Args } from '@nestjs/graphql';
-import { Author } from 'src/graphql';
+import { Author } from '../author/author.interface';
+import { AuthorService } from './author.service';
 
 @Resolver('Author')
 export class AuthorResolver {
-  authors: Author[] = [{ id: '1', firstName: 'wagner', lastName: 'ricardo' }];
+  constructor(private authorService: AuthorService) {}
+
   @Query()
   async allAuthors(): Promise<Author[]> {
-    return Promise.resolve(this.authors);
+    return await this.authorService.find();
   }
 
   @Query()
@@ -15,12 +17,5 @@ export class AuthorResolver {
     @Args('id') id,
     @Context() context,
     @Info() info,
-  ): Promise<void> {
-    const foundAuthor = await this.authors.find(author => author.id === id);
-    if (foundAuthor) {
-      Promise.resolve(foundAuthor);
-    } else {
-      Promise.reject('Não encontrado');
-    }
-  }
+  ): Promise<void> {}
 }

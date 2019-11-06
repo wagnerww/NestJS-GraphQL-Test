@@ -8,7 +8,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest_gql_db'),
+    MongooseModule.forRoot('mongodb://localhost/nest_gql_db', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }),
     GraphQLModule.forRoot({
       typePaths: ['**/*.graphql'],
       definitions: {
