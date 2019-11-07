@@ -8,3 +8,19 @@ type Author {
   firstName: String
   lastName: String
 }
+
+type Mutation {
+  createAuthor(author: AuthorInput!): Author
+  deleteAuthor(id: ID!): String
+  updateAuthor(id: ID!, author: UpdateAuthorInput): Author
+}
+
+input AuthorInput {
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateAuthorInput {
+  firstName: String
+  lastName: String
+}
